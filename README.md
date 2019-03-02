@@ -88,6 +88,11 @@ var labelWidthWeight: CGFloat = 0.5
 var limitHitAnimationColor: UIColor = UIColor(red:0.26, green:0.6, blue:0.87, alpha:1)
 ```
 
+# Erman Changes
+- Delegate support to know when the buttons have been pressed
+
+
+
 
 ## Authors
 
