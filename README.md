@@ -87,11 +87,18 @@ var labelWidthWeight: CGFloat = 0.5
 /// Color of the flashing animation on the buttons in case the value hit the limit.
 var limitHitAnimationColor: UIColor = UIColor(red:0.26, green:0.6, blue:0.87, alpha:1)
 ```
+// Delegate to support detection of button presses
+var delegate : GMStepperDelegate? = nil
 
 # Erman Changes
 - Delegate support to know when the buttons have been pressed
 
-
+protocol GMStepperDelegate
+{
+    func leftButtonPressed(_ sender: GMStepper)
+    func rightButtonPressed(_ sender: GMStepper)
+    func valuePressed(_ sender: GMStepper)
+}
 
 
 ## Authors
