@@ -8,6 +8,14 @@
 
 import UIKit
 
+protocol GMStepperDelegate
+{
+    func leftButtonPressed(_ sender: GMStepper)
+    func rightButtonPressed(_ sender: GMStepper)
+    func valuePressed(_ sender: GMStepper)
+}
+
+
 @IBDesignable public class GMStepper: UIControl {
 
     /// Current value of the stepper. Defaults to 0.
@@ -185,6 +193,8 @@ import UIKit
 
     /// Duration of the animation when the value hits the limit.
     let limitHitAnimationDuration = TimeInterval(0.1)
+    
+    var delegate : GMStepperDelegate? = nil
 
     lazy var leftButton: UIButton = {
         let button = UIButton()
@@ -224,6 +234,11 @@ import UIKit
         label.isUserInteractionEnabled = true
         let panRecognizer = UIPanGestureRecognizer(target: self, action: #selector(GMStepper.handlePan))
         panRecognizer.maximumNumberOfTouches = 1
+        
+        let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(GMStepper.labelPressed))
+        
+        label.addGestureRecognizer(tapRecognizer)
+        
         label.addGestureRecognizer(panRecognizer)
         return label
     }()
@@ -437,7 +452,8 @@ extension GMStepper {
             stepperState = .ShouldDecrease
             animateSlideLeft()
         }
-
+        
+        delegate?.leftButtonPressed(self)
     }
 
     @objc func rightButtonTouchDown(button: UIButton) {
@@ -451,6 +467,13 @@ extension GMStepper {
             stepperState = .ShouldIncrease
             animateSlideRight()
         }
+        
+        delegate?.rightButtonPressed(self)
+    }
+    
+    @objc func labelPressed(label: UILabel)
+    {
+        delegate?.valuePressed(self)
     }
 
     @objc func buttonTouchUp(button: UIButton) {
