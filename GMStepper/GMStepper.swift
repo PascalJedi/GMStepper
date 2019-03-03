@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol GMStepperDelegate
+public protocol GMStepperDelegate
 {
     func leftButtonPressed(_ sender: GMStepper)
     func rightButtonPressed(_ sender: GMStepper)
@@ -135,6 +135,11 @@ protocol GMStepperDelegate
     @objc public var labelFont = UIFont(name: "AvenirNext-Bold", size: 25.0)! {
         didSet {
             label.font = labelFont
+            if #available(iOS 10.0, *) {
+                label.adjustsFontForContentSizeCategory = true
+            } else {
+                // Fallback on earlier versions
+            }
         }
     }
        /// Corner radius of the middle label. Defaults to 0.
@@ -194,7 +199,7 @@ protocol GMStepperDelegate
     /// Duration of the animation when the value hits the limit.
     let limitHitAnimationDuration = TimeInterval(0.1)
     
-    var delegate : GMStepperDelegate? = nil
+    public var delegate : GMStepperDelegate? = nil
 
     lazy var leftButton: UIButton = {
         let button = UIButton()
